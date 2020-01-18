@@ -1,0 +1,23 @@
+PODS:
+  - Eureka (5.1.0)
+  - SuggestionRow (3.1.0):
+    - Eureka (~> 5.1)
+
+DEPENDENCIES:
+  - SuggestionRow (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Eureka
+
+EXTERNAL SOURCES:
+  SuggestionRow:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Eureka: 18a5076dcf0c41f9cd9748aa1c42f4d11434bdae
+  SuggestionRow: 2c0238854a2c1aa472e0b542fedb8583977eec84
+
+PODFILE CHECKSUM: d9b810b1cc1d6b1aa23ab89fc49901d9fb60767f
+
+COCOAPODS: 1.8.4
