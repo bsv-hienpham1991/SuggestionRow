@@ -12,11 +12,22 @@ public protocol SuggestionValue: Equatable, InputTypeInitiable {
     var suggestionString: String { get }
 }
 
+public protocol FilterFunctions {
+    var filterFunction: ((String) -> [Any])! { get set}
+    var asyncFilterFunction: ((String, (@escaping ([Any]) -> Void)) -> Void)? { get set }
+}
+
+public protocol MaxSuggestionRows {
+    var maxSuggestionRows: Int? { get set }
+}
+
 /// Generic suggestion row superclass that defines how to get a list of suggestions based on user input.
-open class _SuggestionRow<Cell: CellType>: FieldRow<Cell> where Cell: BaseCell, Cell: TextFieldCell, Cell.Value: SuggestionValue {
+open class _SuggestionRow<Cell: CellType>: FieldRow<Cell>, FilterFunctions, MaxSuggestionRows where Cell: BaseCell, Cell: TextFieldCell, Cell.Value: SuggestionValue {
+    public var filterFunction: ((String) -> [Any])!
+    
+    public var asyncFilterFunction: ((String, @escaping (([Any]) -> Void)) -> Void)?
+    
 //SuggestionCell<T>
-    public var filterFunction: ((String) -> [Cell.Value])!
-    public var asyncFilterFunction: ((String, (@escaping ([Cell.Value]) -> Void)) -> Void)?
     public var maxSuggestionRows: Int? // How many row results to show at a time in the view
 
     required public init(tag: String?) {

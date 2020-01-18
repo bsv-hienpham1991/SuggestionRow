@@ -53,7 +53,7 @@ open class SuggestionCell<T: SuggestionValue>: _FieldCell<T>, CellType {
         textField.text = row.displayValueFor?(row.value)
     }
 
-    func setSuggestions(_ string: String) {}
+    open func setSuggestions(_ string: String) {}
     
     func reload() {}
 }

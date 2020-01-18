@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Eureka
 
 open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCell<T>, UITableViewDelegate, UITableViewDataSource where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
     
@@ -14,6 +15,8 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
     public var customizeTableViewCell: ((TableViewCell) -> Void)?
     
     public var tableView: UITableView?
+    
+    public var formContentInset: UIEdgeInsets?
 
     required public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -42,12 +45,25 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
     open func showTableView() {
         if let controller = formViewController() {
             if tableView?.superview == nil {
-                controller.view.addSubview(tableView!)
+                controller.tableView.addSubview(tableView!)
             }
-            let frame = controller.tableView?.convert(self.frame, to: controller.view) ?? self.frame
-            let maxSuggestionRowHeight = (row as? _SuggestionRow<SuggestionTableCell>)?.maxSuggestionRows ?? 5
-            tableView?.frame = CGRect(x: 0, y: frame.origin.y + frame.height, width: contentView.frame.width, height: 44 * CGFloat(maxSuggestionRowHeight))
             tableView?.isHidden = false
+            layoutTableView()
+        }
+    }
+    
+    func layoutTableView() {
+        if let controller = formViewController(), let table = tableView {
+            let frame = self.frame
+            let maxSuggestionRowHeight = (row as? MaxSuggestionRows)?.maxSuggestionRows ?? 5
+            let tableViewFrame = CGRect(x: 0, y: frame.origin.y + frame.height, width: contentView.frame.width, height: 44 * CGFloat(maxSuggestionRowHeight))
+            table.frame = tableViewFrame
+            
+            if tableViewFrame.maxY > controller.tableView.contentSize.height && table.isHidden == false {
+                var contentInset = formContentInset ?? UIEdgeInsets.zero
+                contentInset.bottom += (tableViewFrame.maxY - controller.tableView.contentSize.height)
+                controller.tableView.contentInset = contentInset
+            }
         }
     }
     
@@ -55,18 +71,24 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
         tableView?.isHidden = true
     }
     
+    open override func cellBecomeFirstResponder(withDirection: Direction) -> Bool {
+        let firstResponder = super.cellBecomeFirstResponder(withDirection: withDirection)
+        layoutTableView()
+        return firstResponder
+    }
+    
     override func reload() {
         tableView?.reloadData()
     }
-
-    override func setSuggestions(_ string: String) {
-        if let filterFunction = (row as? _SuggestionRow<SuggestionTableCell>)?.filterFunction {
-            suggestions = filterFunction(string)
+        
+    open override func setSuggestions(_ string: String) {
+        if let filterFunction = (row as? FilterFunctions)?.filterFunction {
+            suggestions = filterFunction(string) as? [T]
             reload()
         }
-        if let asyncFilterFunction = (row as? _SuggestionRow<SuggestionTableCell>)?.asyncFilterFunction {
+        if let asyncFilterFunction = (row as? FilterFunctions)?.asyncFilterFunction {
             asyncFilterFunction(string, { (values) in
-                self.suggestions = values
+                self.suggestions = values as? [T]
                 self.reload()
             })
         }
@@ -108,4 +130,16 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
     open func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+}
+
+final class MySuggestionTableRow<T: SuggestionValue>: _SuggestionRow<MySuggestionTableCell<T, SuggestionTableViewCell<T>>>, RowType {
+    required public init(tag: String?) {
+        super.init(tag: tag)
+    }
+}
+
+class MySuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionTableCell<T, TableViewCell> where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
+}
+
+open class MySuggestionTableViewCell<T: SuggestionValue>: SuggestionTableViewCell<T> {
 }

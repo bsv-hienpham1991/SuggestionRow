@@ -61,14 +61,14 @@ open class SuggestionCollectionCell<T, CollectionViewCell: UICollectionViewCell>
         collectionView?.reloadData()
     }
 
-    override func setSuggestions(_ string: String) {
-        if let filterFunction = (row as? _SuggestionRow<SuggestionCollectionCell>)?.filterFunction {
-            suggestions = filterFunction(string)
+    open override func setSuggestions(_ string: String) {
+        if let filterFunction = (row as? FilterFunctions)?.filterFunction {
+            suggestions = filterFunction(string) as? [T]
             reload()
         }
-        if let asyncFilterFunction = (row as? _SuggestionRow<SuggestionCollectionCell>)?.asyncFilterFunction {
+        if let asyncFilterFunction = (row as? FilterFunctions)?.asyncFilterFunction {
             asyncFilterFunction(string, { (values) in
-                self.suggestions = values
+                self.suggestions = values as? [T]
                 self.reload()
             })
         }
