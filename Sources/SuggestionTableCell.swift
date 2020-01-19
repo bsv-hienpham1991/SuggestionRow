@@ -24,6 +24,8 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
     public var tableViewContainer: UIView?
     
     public var formContentInset: UIEdgeInsets?
+    
+    public var suggestionTableViewCellHeight: (() -> CGFloat)?
 
     required public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -70,7 +72,13 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
         if let controller = formViewController(), let tableContainer = tableViewContainer {
             let frame = self.frame
             let maxSuggestionRowHeight = (row as? MaxSuggestionRows)?.maxSuggestionRows ?? 5
-            var tableViewFrame = CGRect(x: 0, y: frame.origin.y + frame.height, width: contentView.frame.width, height: 44 * CGFloat(maxSuggestionRowHeight))
+            let cellHeight: CGFloat
+            if let suggestionTableViewCellHeight = self.suggestionTableViewCellHeight {
+                cellHeight = suggestionTableViewCellHeight()
+            } else {
+                cellHeight = 44
+            }
+            var tableViewFrame = CGRect(x: 0, y: frame.origin.y + frame.height, width: contentView.frame.width, height: cellHeight * CGFloat(maxSuggestionRowHeight))
             tableViewFrame.origin.y += (suggestionViewYOffset ?? 0)
             tableContainer.frame = tableViewFrame
             
@@ -146,5 +154,13 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
     
     open func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let suggestionTableViewCellHeight = suggestionTableViewCellHeight {
+            return suggestionTableViewCellHeight()
+        } else {
+            return 44
+        }
     }
 }
