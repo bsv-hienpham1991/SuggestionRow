@@ -9,13 +9,15 @@ import Foundation
 import Eureka
 
 public protocol EurekaSuggestionTableViewCell {
+    var parentCell: BaseCell? { get set }
     associatedtype S: SuggestionValue
-
+    func setUp()
     func setupForValue(_ value: S)
 }
 
 /// Default cell for the table of the SuggestionTableCell
 open class SuggestionTableViewCell<T: SuggestionValue>: UITableViewCell, EurekaSuggestionTableViewCell {
+    public var parentCell: BaseCell?
     public typealias S = T
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -38,6 +40,11 @@ open class SuggestionTableViewCell<T: SuggestionValue>: UITableViewCell, EurekaS
             textLabel?.textColor = .black
             contentView.backgroundColor = .white
         }
+        setUp()
+    }
+    
+    open func setUp() {
+        
     }
     
     open func setupForValue(_ value: T) {

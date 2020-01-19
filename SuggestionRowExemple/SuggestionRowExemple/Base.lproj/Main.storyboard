@@ -15,9 +15,23 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="q3f-l2-EPo">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <constraints>
+                            <constraint firstItem="q3f-l2-EPo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="5Nu-1S-UQT"/>
+                            <constraint firstAttribute="bottom" secondItem="q3f-l2-EPo" secondAttribute="bottom" id="Hnt-4m-b1s"/>
+                            <constraint firstItem="q3f-l2-EPo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="gKr-ad-aE4"/>
+                            <constraint firstAttribute="trailing" secondItem="q3f-l2-EPo" secondAttribute="trailing" id="niB-xk-POY"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fVg-Um-nsH"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="q3f-l2-EPo" id="To0-ro-gON"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

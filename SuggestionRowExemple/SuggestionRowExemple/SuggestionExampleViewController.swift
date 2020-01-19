@@ -51,7 +51,9 @@ class SuggestionExampleViewController: FormViewController {
                     users.filter({ $0.firstName.lowercased().contains(text.lowercased()) })
                 }
                 $0.placeholder = "Search for a famous scientist"
-                $0.viewProvider = SuggestionContentViewProvider(nibName: "SuggestionCellCustom", bundle: Bundle.main)
+                $0.contentViewProvider = ViewProvider<SuggestionCellContentView>(nibName: "SuggestionCellCustom", bundle: Bundle.main)
+                $0.tableViewProvider = ViewProvider<SuggestionTableContainer>(nibName: "SuggestionTableContainer", bundle: Bundle.main)
+                $0.tableViewCellContentProvider = ViewProvider<SuggestionTableViewCellContentView>(nibName: "SuggestionTableViewCellContentView", bundle: Bundle.main)
             }
             +++ Section("Table suggestions")
             <<< SuggestionTableRow<Scientist>() {
@@ -129,6 +131,9 @@ class SuggestionExampleViewController: FormViewController {
         } else if let row = cell.baseRow as? MySuggestionTableRow<Scientist> {
             suggestTableView = row.cell.tableView
             row.cell.formContentInset = tableView.contentInset
+        } else if let row = cell.baseRow as? SuggestionRowCustom<Scientist> {
+            suggestTableView = row.cell.tableView
+            row.cell.formContentInset = tableView.contentInset
         } else {
             suggestTableView = nil
         }
@@ -159,6 +164,8 @@ class SuggestionExampleViewController: FormViewController {
             row.cell.formContentInset = contentInset
         } else if let row = cell.baseRow as? SuggestionTableRow<Scientist> {
             row.cell.formContentInset = contentInset
+        } else if let row = cell.baseRow as? SuggestionRowCustom<Scientist> {
+            row.cell.formContentInset = contentInset
         }
     }
     
@@ -170,7 +177,8 @@ class SuggestionExampleViewController: FormViewController {
         let beginDragging: Bool
         if let cell = tableView.findFirstResponder()?.formCell(),
             (cell.baseRow is SuggestionTableRow<Scientist> ||
-                cell.baseRow is MySuggestionTableRow<Scientist>) {
+                cell.baseRow is MySuggestionTableRow<Scientist> ||
+                cell.baseRow is SuggestionRowCustom<Scientist>) {
             beginDragging = false
         } else {
             beginDragging = true

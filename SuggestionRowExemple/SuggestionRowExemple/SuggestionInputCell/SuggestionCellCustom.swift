@@ -1,5 +1,5 @@
 //
-//  SuggestionInputCellCustom.swift
+//  SuggestionCellCustom.swift
 //  SuggestionRowExemple
 //
 //  Created by Hien Pham on 1/19/20.
@@ -12,8 +12,12 @@ import Eureka
 import SnapKit
 import SuggestionRow
 
-protocol SuggestionCellContentViewDelegate: class {
-    func suggestionCellContentViewBecomeFirstRersponder(_ suggestionCellContentView: SuggestionCellContentView)
+protocol SuggestionHasCustomContentView: class {
+    var contentViewProvider: ViewProvider<SuggestionCellContentView>? { get set }
+}
+
+protocol SuggestionTableViewHasCustomHeight: class {
+    var suggestionTableViewCellHeight: (() -> CGFloat)? { get set }
 }
 
 class SuggestionCellContentView: UIView {
@@ -24,11 +28,12 @@ class SuggestionCellContentView: UIView {
 
 open class SuggestionCellCustom<T, TableViewCell: UITableViewCell>: SuggestionTableCell<T, TableViewCell> where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
     var bsContentView: SuggestionCellContentView?
+    var bsTableContainer: SuggestionTableContainer?
     
     fileprivate var suggsetionRowCustom: SuggestionHasCustomContentView? { return row as? SuggestionHasCustomContentView }
 
     open override func setup() {
-        bsContentView = suggsetionRowCustom?.viewProvider?.makeView()
+        bsContentView = suggsetionRowCustom?.contentViewProvider?.makeView()
         if let unwrapped = bsContentView {
             contentView.addSubview(unwrapped)
             unwrapped.snp.makeConstraints { (make) in
@@ -43,6 +48,12 @@ open class SuggestionCellCustom<T, TableViewCell: UITableViewCell>: SuggestionTa
             textField = bsContentView?.textField
         }
         
+        bsTableContainer = (row as? SuggestionHasCustomTableView)?.tableViewProvider?.makeView()
+        if let unwrapped = bsTableContainer {
+            tableView = unwrapped.tableView
+            tableViewContainer = unwrapped
+        }
+                
         super.setup()
     }
     
@@ -55,30 +66,12 @@ open class SuggestionCellCustom<T, TableViewCell: UITableViewCell>: SuggestionTa
         titleLabel?.isHidden = true
         bsContentView?.titleLabel?.text = row.title
     }
-}
-
-extension SuggestionCellCustom: SuggestionCellContentViewDelegate {
-    func suggestionCellContentViewBecomeFirstRersponder(_ suggestionCellContentView: SuggestionCellContentView) {
-        cellBecomeFirstResponder(withDirection: .down)
-    }
-}
-
-protocol SuggestionHasCustomContentView: class {
-    var viewProvider: SuggestionContentViewProvider? { get set }
-}
-
-open class _SuggestionRowCustom<Cell: CellType> : _SuggestionRow<Cell>, SuggestionHasCustomContentView, NoValueDisplayTextConformance where Cell: BaseCell, Cell: TextFieldCell, Cell.Value: SuggestionValue {
-    open var noValueDisplayText: String? = nil
-    var viewProvider: SuggestionContentViewProvider?
     
-    required public init(tag: String?) {
-        super.init(tag: tag)
-    }
-}
-
-public final class SuggestionRowCustom<T: SuggestionValue>: _SuggestionRowCustom<SuggestionCellCustom<T, SuggestionTableViewCell<T>>>, RowType {
-
-    required public init(tag: String?) {
-        super.init(tag: tag)
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let row = row as? SuggestionTableViewHasCustomHeight, let suggestionTableViewCellHeight = row.suggestionTableViewCellHeight {
+            return suggestionTableViewCellHeight()
+        } else {
+            return 44
+        }
     }
 }

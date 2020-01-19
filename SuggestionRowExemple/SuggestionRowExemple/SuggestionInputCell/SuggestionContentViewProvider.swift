@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct SuggestionContentViewProvider {
+struct ViewProvider<T> where T: UIView {
 
     /// Nibname of the cell that will be created.
     public private (set) var nibName: String?
@@ -24,10 +24,10 @@ struct SuggestionContentViewProvider {
         self.bundle = bundle
     }
 
-    func makeView() -> SuggestionCellContentView {
+    func makeView() -> T {
         if let nibName = self.nibName {
-            return bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as! SuggestionCellContentView
+            return bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as! T
         }
-        return SuggestionCellContentView()
+        return T()
     }
 }
