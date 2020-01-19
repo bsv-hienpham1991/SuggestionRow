@@ -45,12 +45,13 @@ class SuggestionExampleViewController: FormViewController {
             }
         
             +++ Section("Table suggestions")
-            <<< MySuggestionTableRow<Scientist>() {
+            <<< SuggestionRowCustom<Scientist>() {
                 $0.maxSuggestionRows = 10
                 $0.filterFunction = { text in
                     users.filter({ $0.firstName.lowercased().contains(text.lowercased()) })
                 }
                 $0.placeholder = "Search for a famous scientist"
+                $0.viewProvider = SuggestionContentViewProvider(nibName: "SuggestionCellCustom", bundle: Bundle.main)
             }
             +++ Section("Table suggestions")
             <<< SuggestionTableRow<Scientist>() {

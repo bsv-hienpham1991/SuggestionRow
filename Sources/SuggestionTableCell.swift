@@ -28,18 +28,23 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
     
     open override func setup() {
         super.setup()
-        tableView = UITableView(frame: CGRect.zero, style: .plain)
+        if tableView == nil {
+            tableView = UITableView(frame: CGRect.zero, style: .plain)
+            
+            if #available(iOS 13.0, *) {
+                tableView?.backgroundColor = UIColor.systemBackground
+            } else {
+                tableView?.backgroundColor = UIColor.white
+            }
+            
+            tableView?.isHidden = true
+        }
+
+        tableView?.register(TableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView?.tableFooterView = UIView(frame: CGRect.zero)
         tableView?.autoresizingMask = .flexibleHeight
-        tableView?.isHidden = true
         tableView?.delegate = self
         tableView?.dataSource = self
-        if #available(iOS 13.0, *) {
-            tableView?.backgroundColor = UIColor.systemBackground
-        } else {
-            tableView?.backgroundColor = UIColor.white
-        }
-        tableView?.register(TableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
     }
     
     open func showTableView() {

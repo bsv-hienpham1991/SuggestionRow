@@ -7,6 +7,7 @@ target 'SuggestionRowExemple' do
 
   # Pods for SuggestionRowExemple
   pod 'SuggestionRow', :path => '../'
+  pod 'SnapKit'
 
   target 'SuggestionRowExempleTests' do
     inherit! :search_paths
