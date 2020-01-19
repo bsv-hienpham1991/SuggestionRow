@@ -22,7 +22,7 @@ public protocol MaxSuggestionRows {
 }
 
 /// Generic suggestion row superclass that defines how to get a list of suggestions based on user input.
-open class _SuggestionRow<Cell: CellType>: FieldRow<Cell>, FilterFunctions, MaxSuggestionRows where Cell: BaseCell, Cell: TextFieldCell, Cell.Value: SuggestionValue {
+open class _SuggestionRow<Cell: CellType>: FieldRow<Cell>, FilterFunctions, MaxSuggestionRows where Cell: BaseCell, Cell: TextFieldCell, Cell.Value: SuggestionValue {    
     public var filterFunction: ((String) -> [Any])!
     
     public var asyncFilterFunction: ((String, @escaping (([Any]) -> Void)) -> Void)?

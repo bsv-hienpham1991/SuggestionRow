@@ -55,6 +55,9 @@ class SuggestionExampleViewController: FormViewController {
                 $0.tableViewProvider = ViewProvider<SuggestionTableContainer>(nibName: "SuggestionTableContainer", bundle: Bundle.main)
                 $0.tableViewCellContentProvider = ViewProvider<SuggestionTableViewCellContentView>(nibName: "SuggestionTableViewCellContentView", bundle: Bundle.main)
             }
+            .cellSetup({ (cell, row) in
+                cell.suggestionViewYOffset = 20
+            })
             +++ Section("Table suggestions")
             <<< SuggestionTableRow<Scientist>() {
                 $0.filterFunction = { text in

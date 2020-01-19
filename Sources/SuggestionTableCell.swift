@@ -9,7 +9,12 @@ import Foundation
 import UIKit
 import Eureka
 
-open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCell<T>, UITableViewDelegate, UITableViewDataSource where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
+public protocol SuggestionTableViewHasCustomPosition: class {
+    var suggestionViewYOffset: CGFloat? { get set }
+}
+
+open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCell<T>, SuggestionTableViewHasCustomPosition, UITableViewDelegate, UITableViewDataSource where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
+    public var suggestionViewYOffset: CGFloat?
     
     /// callback that can be used to customize the table cell.
     public var customizeTableViewCell: ((TableViewCell) -> Void)?
@@ -65,7 +70,8 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
         if let controller = formViewController(), let tableContainer = tableViewContainer {
             let frame = self.frame
             let maxSuggestionRowHeight = (row as? MaxSuggestionRows)?.maxSuggestionRows ?? 5
-            let tableViewFrame = CGRect(x: 0, y: frame.origin.y + frame.height, width: contentView.frame.width, height: 44 * CGFloat(maxSuggestionRowHeight))
+            var tableViewFrame = CGRect(x: 0, y: frame.origin.y + frame.height, width: contentView.frame.width, height: 44 * CGFloat(maxSuggestionRowHeight))
+            tableViewFrame.origin.y += (suggestionViewYOffset ?? 0)
             tableContainer.frame = tableViewFrame
             
             if tableViewFrame.maxY > controller.tableView.contentSize.height && tableContainer.isHidden == false {
