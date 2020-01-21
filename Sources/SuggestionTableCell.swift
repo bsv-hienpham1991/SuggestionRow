@@ -9,11 +9,14 @@ import Foundation
 import UIKit
 import Eureka
 
-public protocol SuggestionTableViewHasCustomPosition: class {
+public protocol BaseSuggestionTableCellType: class {
     var suggestionViewYOffset: CGFloat? { get set }
+    var formContentInset: UIEdgeInsets? { get set }
+    var tableView: UITableView? { get set }
+    var tableViewContainer: UIView? { get set }
 }
 
-open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCell<T>, SuggestionTableViewHasCustomPosition, UITableViewDelegate, UITableViewDataSource where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
+open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCell<T>, BaseSuggestionTableCellType, UITableViewDelegate, UITableViewDataSource where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
     public var suggestionViewYOffset: CGFloat?
     
     /// callback that can be used to customize the table cell.
