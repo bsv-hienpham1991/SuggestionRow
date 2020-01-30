@@ -50,6 +50,11 @@ open class SuggestionCell<T: SuggestionValue>: _FieldCell<T>, CellType {
     open override func textFieldDidEndEditing(_ textField: UITextField) {
         formViewController()?.endEditing(of: self)
         formViewController()?.textInputDidEndEditing(textField, cell: self)
+        update()
+    }
+    
+    open override func update() {
+        super.update()
         textField.text = row.displayValueFor?(row.value)
     }
 
