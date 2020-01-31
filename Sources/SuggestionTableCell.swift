@@ -53,7 +53,7 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
         }
 
         tableViewContainer?.isHidden = true
-        tableViewContainer?.layer.zPosition = 1
+        tableViewContainer?.layer.zPosition = CGFloat.infinity
         tableView?.register(TableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView?.tableFooterView = UIView(frame: CGRect.zero)
         tableView?.autoresizingMask = .flexibleHeight

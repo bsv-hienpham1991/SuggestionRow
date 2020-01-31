@@ -67,7 +67,7 @@ open class SuggestionCellCustom<T, TableViewCell: UITableViewCell>: SuggestionTa
         bsContentView?.titleLabel?.text = row.title
     }
     
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    open override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let row = row as? SuggestionTableViewHasCustomHeight, let suggestionTableViewCellHeight = row.suggestionTableViewCellHeight {
             return suggestionTableViewCellHeight()
         } else {
