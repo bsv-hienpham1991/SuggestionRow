@@ -10,14 +10,14 @@ import UIKit
 import Eureka
 
 public protocol BaseSuggestionTableCellType: class {
-    var suggestionViewYOffset: CGFloat? { get set }
+    var suggestionViewYOffset: (() -> CGFloat)? { get set }
     var formContentInset: UIEdgeInsets? { get set }
     var tableView: UITableView? { get set }
     var tableViewContainer: UIView? { get set }
 }
 
 open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCell<T>, BaseSuggestionTableCellType, UITableViewDelegate, UITableViewDataSource where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
-    public var suggestionViewYOffset: CGFloat?
+    public var suggestionViewYOffset: (() -> CGFloat)?
     
     /// callback that can be used to customize the table cell.
     public var customizeTableViewCell: ((TableViewCell) -> Void)?
@@ -82,7 +82,7 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
                 cellHeight = 44
             }
             var tableViewFrame = CGRect(x: 0, y: frame.origin.y + frame.height, width: contentView.frame.width, height: cellHeight * CGFloat(maxSuggestionRowHeight))
-            tableViewFrame.origin.y += (suggestionViewYOffset ?? 0)
+            tableViewFrame.origin.y += (suggestionViewYOffset?() ?? 0)
             tableContainer.frame = tableViewFrame
             
             if tableViewFrame.maxY > controller.tableView.contentSize.height && tableContainer.isHidden == false {
