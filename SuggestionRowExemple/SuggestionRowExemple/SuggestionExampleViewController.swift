@@ -56,7 +56,10 @@ class SuggestionExampleViewController: FormViewController {
                 $0.tableViewCellContentProvider = ViewProvider<SuggestionTableViewCellContentView>(nibName: "SuggestionTableViewCellContentView", bundle: Bundle.main)
             }
             .cellSetup({ (cell, row) in
-                cell.suggestionViewYOffset = 20
+                cell.suggestionViewYOffset = { 20 }
+                cell.suggestionTableViewCellHeight = { (indexPath) in
+                    return 44
+                }
             })
             +++ Section("Table suggestions")
             <<< SuggestionTableRow<Scientist>() {
@@ -125,23 +128,13 @@ class SuggestionExampleViewController: FormViewController {
     
     override func keyboardWillShow(_ notification: Notification) {
         super.keyboardWillShow(notification)
-        guard let cell = tableView.findFirstResponder()?.formCell() else { return }
+        
+        // Handle suggestion cell
+        guard let cell = tableView.findFirstResponder()?.formCell() as? BaseSuggestionTableCellType else { return }
         contentInset = tableView.contentInset
-        let suggestTableView: UITableView?
-        if let row = cell.baseRow as? SuggestionTableRow<Scientist> {
-            suggestTableView = row.cell.tableView
-            row.cell.formContentInset = tableView.contentInset
-        } else if let row = cell.baseRow as? MySuggestionTableRow<Scientist> {
-            suggestTableView = row.cell.tableView
-            row.cell.formContentInset = tableView.contentInset
-        } else if let row = cell.baseRow as? SuggestionRowCustom<Scientist> {
-            suggestTableView = row.cell.tableView
-            row.cell.formContentInset = tableView.contentInset
-        } else {
-            suggestTableView = nil
-        }
+        cell.formContentInset = tableView.contentInset
 
-        if let suggestTableView = suggestTableView {
+        if let suggestTableView = cell.tableView {
             if suggestTableView.frame.maxY > tableView.contentSize.height && suggestTableView.isHidden == false {
                 var contentInset = tableView.contentInset
                 contentInset.bottom += (suggestTableView.frame.maxY - tableView.contentSize.height)
@@ -163,25 +156,24 @@ class SuggestionExampleViewController: FormViewController {
     
     override func textInputDidBeginEditing<T>(_ textInput: UITextInput, cell: Cell<T>) where T : Equatable {
         super.textInputDidBeginEditing(textInput, cell: cell)
-        if let row = cell.baseRow as? MySuggestionTableRow<Scientist> {
-            row.cell.formContentInset = contentInset
-        } else if let row = cell.baseRow as? SuggestionTableRow<Scientist> {
-            row.cell.formContentInset = contentInset
-        } else if let row = cell.baseRow as? SuggestionRowCustom<Scientist> {
-            row.cell.formContentInset = contentInset
+        if let suggestionCell = cell as? BaseSuggestionTableCellType {
+            suggestionCell.formContentInset = contentInset
         }
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil
+        let row = form.allSections[indexPath.section].allRows[indexPath.row]
+        if row.baseCell is BaseSuggestionTableCellType {
+            return nil
+        }
+        return super.tableView(tableView, willSelectRowAt: indexPath)
     }
     
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let beginDragging: Bool
-        if let cell = tableView.findFirstResponder()?.formCell(),
-            (cell.baseRow is SuggestionTableRow<Scientist> ||
-                cell.baseRow is MySuggestionTableRow<Scientist> ||
-                cell.baseRow is SuggestionRowCustom<Scientist>) {
+        if
+            let cell = tableView.findFirstResponder()?.formCell(),
+            cell is BaseSuggestionTableCellType {
             beginDragging = false
         } else {
             beginDragging = true
@@ -217,16 +209,4 @@ struct Scientist: SuggestionValue {
 
 func == (lhs: Scientist, rhs: Scientist) -> Bool {
     return lhs.id == rhs.id
-}
-
-final class MySuggestionTableRow<T: SuggestionValue>: _SuggestionRow<MySuggestionTableCell<T, SuggestionTableViewCell<T>>>, RowType {
-    required public init(tag: String?) {
-        super.init(tag: tag)
-    }
-}
-
-class MySuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionTableCell<T, TableViewCell> where TableViewCell: EurekaSuggestionTableViewCell, TableViewCell.S == T {
-}
-
-open class MySuggestionTableViewCell<T: SuggestionValue>: SuggestionTableViewCell<T> {
 }

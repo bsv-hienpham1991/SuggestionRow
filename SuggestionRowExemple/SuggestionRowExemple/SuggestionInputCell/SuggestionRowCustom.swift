@@ -26,13 +26,11 @@ open class _SuggestionRowCustom<Cell: CellType> : _SuggestionRow<Cell>,
     SuggestionHasCustomContentView,
     SuggestionHasCustomTableView,
     SuggestionHasCustomTableViewCell,
-    SuggestionTableViewHasCustomHeight,
 NoValueDisplayTextConformance where Cell: BaseCell, Cell: TextFieldCell, Cell.Value: SuggestionValue {
     open var noValueDisplayText: String? = nil
     var contentViewProvider: ViewProvider<SuggestionCellContentView>?
     var tableViewProvider: ViewProvider<SuggestionTableContainer>?
     var tableViewCellContentProvider: ViewProvider<SuggestionTableViewCellContentView>?
-    var suggestionTableViewCellHeight: (() -> CGFloat)?
     
     required public init(tag: String?) {
         super.init(tag: tag)

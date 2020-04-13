@@ -16,7 +16,7 @@
 		0E6878FB23D3615500DB318D /* SuggestionRowExempleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6878FA23D3615500DB318D /* SuggestionRowExempleTests.swift */; };
 		0E798E0523D3DB830099A310 /* MySuggestionTableRow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E798E0423D3DB830099A310 /* MySuggestionTableRow.xib */; };
 		0E798E0823D3E1210099A310 /* SuggestionRowCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E798E0723D3E1210099A310 /* SuggestionRowCustom.swift */; };
-		0E798E0A23D3EBB50099A310 /* SuggestionContentViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E798E0923D3EBB50099A310 /* SuggestionContentViewProvider.swift */; };
+		0E798E0A23D3EBB50099A310 /* ViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E798E0923D3EBB50099A310 /* ViewProvider.swift */; };
 		0E798E0C23D3F4C80099A310 /* SuggestionCellCustom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E798E0B23D3F4C80099A310 /* SuggestionCellCustom.xib */; };
 		0EAC15FB23D47C2100625838 /* SuggestionTableViewCellCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC15FA23D47C2100625838 /* SuggestionTableViewCellCustom.swift */; };
 		0EAC15FD23D47C7000625838 /* SuggestionCellCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC15FC23D47C7000625838 /* SuggestionCellCustom.swift */; };
@@ -51,7 +51,7 @@
 		0E6878FC23D3615500DB318D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E798E0423D3DB830099A310 /* MySuggestionTableRow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MySuggestionTableRow.xib; sourceTree = "<group>"; };
 		0E798E0723D3E1210099A310 /* SuggestionRowCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionRowCustom.swift; sourceTree = "<group>"; };
-		0E798E0923D3EBB50099A310 /* SuggestionContentViewProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionContentViewProvider.swift; sourceTree = "<group>"; };
+		0E798E0923D3EBB50099A310 /* ViewProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProvider.swift; sourceTree = "<group>"; };
 		0E798E0B23D3F4C80099A310 /* SuggestionCellCustom.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionCellCustom.xib; sourceTree = "<group>"; };
 		0EAC15FA23D47C2100625838 /* SuggestionTableViewCellCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTableViewCellCustom.swift; sourceTree = "<group>"; };
 		0EAC15FC23D47C7000625838 /* SuggestionCellCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCellCustom.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		0E798E0623D3E0AE0099A310 /* SuggestionInputCell */ = {
 			isa = PBXGroup;
 			children = (
-				0E798E0923D3EBB50099A310 /* SuggestionContentViewProvider.swift */,
+				0E798E0923D3EBB50099A310 /* ViewProvider.swift */,
 				0E798E0723D3E1210099A310 /* SuggestionRowCustom.swift */,
 				0EAC15FE23D47DA600625838 /* SuggestionTableCustom.swift */,
 				0EAC15FC23D47C7000625838 /* SuggestionCellCustom.swift */,
@@ -342,7 +342,7 @@
 				0EAC15FF23D47DA600625838 /* SuggestionTableCustom.swift in Sources */,
 				0E798E0823D3E1210099A310 /* SuggestionRowCustom.swift in Sources */,
 				0E6878E423D3615100DB318D /* AppDelegate.swift in Sources */,
-				0E798E0A23D3EBB50099A310 /* SuggestionContentViewProvider.swift in Sources */,
+				0E798E0A23D3EBB50099A310 /* ViewProvider.swift in Sources */,
 				0EAC15FD23D47C7000625838 /* SuggestionCellCustom.swift in Sources */,
 				0EAC15FB23D47C2100625838 /* SuggestionTableViewCellCustom.swift in Sources */,
 				0E6878E623D3615100DB318D /* SceneDelegate.swift in Sources */,

@@ -16,10 +16,6 @@ protocol SuggestionHasCustomContentView: class {
     var contentViewProvider: ViewProvider<SuggestionCellContentView>? { get set }
 }
 
-protocol SuggestionTableViewHasCustomHeight: class {
-    var suggestionTableViewCellHeight: (() -> CGFloat)? { get set }
-}
-
 class SuggestionCellContentView: UIView {
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var textField: UITextField!
@@ -65,13 +61,5 @@ open class SuggestionCellCustom<T, TableViewCell: UITableViewCell>: SuggestionTa
         super.update()
         titleLabel?.isHidden = true
         bsContentView?.titleLabel?.text = row.title
-    }
-    
-    open override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let row = row as? SuggestionTableViewHasCustomHeight, let suggestionTableViewCellHeight = row.suggestionTableViewCellHeight {
-            return suggestionTableViewCellHeight()
-        } else {
-            return 44
-        }
     }
 }
