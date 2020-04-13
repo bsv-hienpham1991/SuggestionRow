@@ -14,7 +14,6 @@
 		0E6878ED23D3615500DB318D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E6878EC23D3615500DB318D /* Assets.xcassets */; };
 		0E6878F023D3615500DB318D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E6878EE23D3615500DB318D /* LaunchScreen.storyboard */; };
 		0E6878FB23D3615500DB318D /* SuggestionRowExempleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6878FA23D3615500DB318D /* SuggestionRowExempleTests.swift */; };
-		0E798E0523D3DB830099A310 /* MySuggestionTableRow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E798E0423D3DB830099A310 /* MySuggestionTableRow.xib */; };
 		0E798E0823D3E1210099A310 /* SuggestionRowCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E798E0723D3E1210099A310 /* SuggestionRowCustom.swift */; };
 		0E798E0A23D3EBB50099A310 /* ViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E798E0923D3EBB50099A310 /* ViewProvider.swift */; };
 		0E798E0C23D3F4C80099A310 /* SuggestionCellCustom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E798E0B23D3F4C80099A310 /* SuggestionCellCustom.xib */; };
@@ -49,7 +48,6 @@
 		0E6878F623D3615500DB318D /* SuggestionRowExempleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuggestionRowExempleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E6878FA23D3615500DB318D /* SuggestionRowExempleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionRowExempleTests.swift; sourceTree = "<group>"; };
 		0E6878FC23D3615500DB318D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E798E0423D3DB830099A310 /* MySuggestionTableRow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MySuggestionTableRow.xib; sourceTree = "<group>"; };
 		0E798E0723D3E1210099A310 /* SuggestionRowCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionRowCustom.swift; sourceTree = "<group>"; };
 		0E798E0923D3EBB50099A310 /* ViewProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProvider.swift; sourceTree = "<group>"; };
 		0E798E0B23D3F4C80099A310 /* SuggestionCellCustom.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionCellCustom.xib; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				0E6878EC23D3615500DB318D /* Assets.xcassets */,
 				0E6878EE23D3615500DB318D /* LaunchScreen.storyboard */,
 				0E6878F123D3615500DB318D /* Info.plist */,
-				0E798E0423D3DB830099A310 /* MySuggestionTableRow.xib */,
 				0E798E0B23D3F4C80099A310 /* SuggestionCellCustom.xib */,
 				0EFD49DD23D4842B00984B06 /* SuggestionTableContainer.xib */,
 				0EFD49DF23D4904600984B06 /* SuggestionTableViewCellContentView.xib */,
@@ -255,7 +252,6 @@
 				0E6878ED23D3615500DB318D /* Assets.xcassets in Resources */,
 				0E6878EB23D3615100DB318D /* Main.storyboard in Resources */,
 				0EFD49DE23D4842B00984B06 /* SuggestionTableContainer.xib in Resources */,
-				0E798E0523D3DB830099A310 /* MySuggestionTableRow.xib in Resources */,
 				0E798E0C23D3F4C80099A310 /* SuggestionCellCustom.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
