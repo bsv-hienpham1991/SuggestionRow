@@ -1,8 +1,8 @@
 PODS:
-  - Eureka (5.1.0)
+  - Eureka (5.3.3)
   - SnapKit (5.0.1)
-  - SuggestionRow (3.1.0):
-    - Eureka (~> 5.1)
+  - SuggestionRow (3.2.0):
+    - Eureka (~> 5.2)
 
 DEPENDENCIES:
   - SnapKit
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Eureka: 18a5076dcf0c41f9cd9748aa1c42f4d11434bdae
+  Eureka: e6d720290c56bb23333ad1a0e020b2a98a0e9a43
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SuggestionRow: 2c0238854a2c1aa472e0b542fedb8583977eec84
+  SuggestionRow: 26928d40ede2cb55858fe8b10364a43dcd5ad9e5
 
 PODFILE CHECKSUM: b64c6f2b4597734e551ab4874f215651a0a07ac2
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.1

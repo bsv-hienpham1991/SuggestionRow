@@ -9,9 +9,8 @@ import Foundation
 import UIKit
 import Eureka
 
-public protocol BaseSuggestionTableCellType: class {
+public protocol BaseSuggestionTableCellType: AnyObject {
     var suggestionViewYOffset: (() -> CGFloat)? { get set }
-    var formContentInset: UIEdgeInsets? { get set }
     var tableView: UITableView? { get set }
     var tableViewContainer: UIView? { get set }
 }
@@ -89,7 +88,8 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
             var tableViewFrame = CGRect(x: 0, y: frame.origin.y + frame.height, width: UIScreen.main.bounds.width, height: tableViewHeight)
             tableViewFrame.origin.y += (suggestionViewYOffset?() ?? 0)
             tableContainer.frame = tableViewFrame
-            
+                        
+            // Adjust content inset to make sure suggestion list is available on screen
             if tableViewFrame.maxY > controller.tableView.contentSize.height && tableContainer.isHidden == false {
                 var contentInset = formContentInset ?? UIEdgeInsets.zero
                 contentInset.bottom += (tableViewFrame.maxY - controller.tableView.contentSize.height)
@@ -101,13 +101,15 @@ open class SuggestionTableCell<T, TableViewCell: UITableViewCell>: SuggestionCel
     open func hideTableView() {
         tableViewContainer?.isHidden = true
     }
-    
-    open override func cellBecomeFirstResponder(withDirection: Direction) -> Bool {
-        let firstResponder = super.cellBecomeFirstResponder(withDirection: withDirection)
-        layoutTableView()
-        return firstResponder
+        
+    open override func textFieldDidBeginEditing(_ textField: UITextField) {
+        super.textFieldDidBeginEditing(textField)
+        // Delay to wait until keyboard height is apply to content inset of form view controller
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150)) {
+            self.formContentInset = self.formViewController()?.tableView.contentInset
+        }
     }
-    
+        
     override func reload() {
         tableView?.reloadData()
     }
